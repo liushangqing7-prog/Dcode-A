@@ -1,33 +1,71 @@
-# Dcode-A
+# Dcode-A（Python 纯命令行版）
 
-## Python 本地入口（功能保留版）
+按你的要求，仓库根目录入口已重写为**纯 Python 命令行工具**，不再提供网页跳转与本地静态站点服务。
 
-仓库根目录提供了 `app.py`，使用 Python 启动静态服务并在访问根路径时自动跳转到 `dnove-web/`，与原先根目录 `index.html` 的跳转功能一致。
-
-```bash
-python3 app.py --host 127.0.0.1 --port 8000
-```
-
-启动后访问：`http://127.0.0.1:8000/`
-
----
-
-## GitHub Pages 部署
-
-前端项目位于 `dnove-web/`。为保证在 GitHub Pages 上“直接打开/刷新子路由”不 404，项目已改为 Hash 路由并提供专用构建命令。
+## 快速开始
 
 ```bash
-cd dnove-web
-npm install
-npm run build:github-pages
+python3 app.py --help
 ```
 
-将 `dnove-web/dist` 目录内容发布到 GitHub Pages 即可。
+## 核心命令
 
-## 前端开发环境
+### 1) 初始化项目
 
 ```bash
-cd dnove-web
-npm install
-npm run dev
+python3 app.py init --title "我的小说" --author "作者名" --description "一句话简介" --tags 奇幻 冒险
 ```
+
+会在当前目录创建：
+
+- `.dcodea/project.json`（项目信息）
+- `.dcodea/chapters/`（章节目录）
+
+### 2) 新增章节
+
+```bash
+python3 app.py add --title "初遇" --content "这里写正文"
+```
+
+### 3) 查看章节列表
+
+```bash
+python3 app.py list
+```
+
+### 4) 查看某一章
+
+```bash
+python3 app.py show 1
+```
+
+### 5) 查看统计
+
+```bash
+python3 app.py stats
+```
+
+### 6) 导出整本为 Markdown
+
+```bash
+python3 app.py export --output novel.md
+```
+
+## 数据结构
+
+```text
+.
+├─ app.py
+└─ .dcodea/
+   ├─ project.json
+   └─ chapters/
+      ├─ 0001.md
+      ├─ 0002.md
+      └─ ...
+```
+
+## 说明
+
+- 工具仅使用 Python 标准库。
+- 默认使用当前目录作为项目根目录。
+- 可通过 `--root /path/to/workspace` 在其他目录操作。
